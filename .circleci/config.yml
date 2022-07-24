@@ -129,11 +129,10 @@ jobs:
       - image: amazon/aws-cli
     steps:
       - checkout
-      - run:
-          name: install tar and gzip
-          command: |
-                  yum install tar -y;
-                  yum install gzip -y;
+#      - run:
+#          name: install tar and gzip
+#          command: |
+           #command here 
       - run:
           name: Ensure back-end infrastructure exists
           command: |
@@ -174,7 +173,7 @@ jobs:
       - add_ssh_keys:
           fingerprints: ["ae:5c:20:a5:fe:41:9b:a9:49:d3:cd:66:c3:d8:8c:57"]
       - attach_workspace:
-          at: ~/project/.circleci/ansible/inventory.txt
+          at: ~/
       - run:
           name: Install dependencies
           command: |
