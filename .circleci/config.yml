@@ -288,7 +288,28 @@ jobs:
 #            then
 #              # your code here
 #            fi
-            
+  notify:
+     docker:
+       - image: 'cimg/base:stable'
+     steps:
+       - slack/notify:
+           custom: |
+             {
+               "blocks": [
+                 {
+                   "type": "section",
+                   "fields": [
+                     {
+                       "type": "plain_text",
+                       "text": "*Job completed*",
+                       "emoji": true
+                     }
+                   ]
+                 }
+               ]
+             }
+           event: always
+          
 workflows:
   default:
     jobs:
