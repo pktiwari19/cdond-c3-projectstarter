@@ -105,7 +105,6 @@ jobs:
                   npm install;
                   # npm install oauth-sign@^0.9.0
                   npm audit fix --audit-level=critical --force
-                  npm audit fix --force
                   npm audit --audit-level=critical
 
   scan-backend:
@@ -122,7 +121,6 @@ jobs:
                   npm install;
                   # npm install oauth-sign@^0.9.0
                   npm audit fix --audit-level=critical --force
-                  npm audit fix --force
                   npm audit --audit-level=critical
 
   deploy-infrastructure:
@@ -167,26 +165,25 @@ jobs:
             - project/.circleci/ansible/inventory.txt
       - destroy_environment
 
-#  configure-infrastructure:
-#    docker: 
-#      - image: amazon/aws-cli
-      # Docker image here that supports Ansible
-#    steps:
-      # Checkout code from git
-      # Add ssh keys with fingerprint
-      # attach workspace
-#      - run:
-#          name: Install dependencies
-#          command: |
-            # Your code here
-#            exit 1
-#      - run:
-#          name: Configure server
-#          command: |
-            # Your code here
-#            exit 1
-      # Here's where you will add some code to rollback on failure      
-
+  configure-infrastructure:
+    docker: 
+      - image: "python:3.7-alpine3.11"
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints: ["ae:5c:20:a5:fe:41:9b:a9:49:d3:cd:66:c3:d8:8c:57"]
+      - attach_workspace:
+          at: ~/project/.circleci/ansible/inventory.txt
+      - run:
+          name: Install dependencies
+          command: |
+             apk add --update ansible
+      - run:
+          name: Configure server
+          command: |
+             cd .circleci/ansible
+             ansible-playbook -i inventory.txt configure-server.yml 
+      - destroy_environment
 #  run-migrations:
 #    docker: 
 #      - image: amazon/aws-cli
@@ -340,11 +337,8 @@ workflows:
 #          context: slackIntegration
       - deploy-infrastructure:
           requires: [test-frontend, test-backend, scan-frontend, scan-backend]
-#          filters:
-#            branches:
-#              only: [test-feature-branch]
-#      - configure-infrastructure:
-#          requires: [deploy-infrastructure]
+      - configure-infrastructure:
+          requires: [deploy-infrastructure]
 #      - run-migrations:
 #          requires: [configure-infrastructure]
 #      - deploy-frontend:
@@ -357,3 +351,4 @@ workflows:
 #          requires: [smoke-test]
 #      - cleanup:
 #          requires: [cloudfront-update]
+
