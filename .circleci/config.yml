@@ -125,7 +125,8 @@ jobs:
                   npm audit --audit-level=critical
 
   deploy-infrastructure:
-    docker: amazon/aws-cli
+    docker: 
+      - image: amazon/aws-cli
     steps:
       - checkout
       - run:
@@ -167,7 +168,8 @@ jobs:
           when: on_fail
 
 #  configure-infrastructure:
-#    docker: amazon/aws-cli
+#    docker: 
+#      - image: amazon/aws-cli
       # Docker image here that supports Ansible
 #    steps:
       # Checkout code from git
@@ -186,7 +188,8 @@ jobs:
       # Here's where you will add some code to rollback on failure      
 
 #  run-migrations:
-#    docker: amazon/aws-cli
+#    docker: 
+#      - image: amazon/aws-cli
       # Docker image here that supports NodeJS
 #    steps:
       # Checkout code from git
@@ -203,7 +206,8 @@ jobs:
      # Here's where you will add some code to rollback on failure      
 
 #  deploy-frontend:
-#    docker: amazon/aws-cli
+#    docker: 
+#      - image: amazon/aws-cli
       # Docker image here that supports AWS CLI
 #    steps:
       # Checkout code from git
@@ -224,7 +228,8 @@ jobs:
       # Here's where you will add some code to rollback on failure      
                     
 #  deploy-backend:
-#    docker: "python:3.7-alpine3.11"
+#    docker: 
+#      - image: "python:3.7-alpine3.11"
       # Docker image here that supports Ansible
 #    steps:
       # Checkout code from git
