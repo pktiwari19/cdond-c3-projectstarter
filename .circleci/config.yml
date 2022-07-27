@@ -182,8 +182,8 @@ jobs:
       - run:
           name: install aws-cli
           command: |
-             apt-get install -y curl;
-             apt-get install -u zip;
+             yum install -y curl;
+             yum install -u zip;
              curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip";
              unzip awscliv2.zip;
              ./aws/install;
@@ -301,9 +301,9 @@ jobs:
       - run:
           name: install tar, gzip and nodejs
           command:
-             sudo apt-get install -y tar;
-             sudo apt-get install -y gzip;
-             sudo apt-get install -y nodejs
+             yum install -y tar;
+             yum install -y gzip;
+             yum install -y nodejs
       - run:
           name: install npm
           command:
@@ -313,11 +313,11 @@ jobs:
       - run:
           name: install aws-cli
           command: |
-             sudo apt-get install -y curl;
-             sudo apt-get install -u zip;
-             sudo curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip";
-             sudo unzip awscliv2.zip;
-             sudo ./aws/install;
+             yum install -y curl;
+             yum install -u zip;
+             curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip";
+             unzip awscliv2.zip;
+             ./aws/install;
              aws --version
 
       - run:
