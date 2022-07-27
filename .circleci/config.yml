@@ -222,7 +222,7 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - ~/result.txt
+            - project/.circleci/result.txt
 
       - destroy_environment      
 
