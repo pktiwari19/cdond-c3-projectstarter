@@ -222,7 +222,7 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - result.txt
+            - ~/result.txt
 
       - destroy_environment      
 
