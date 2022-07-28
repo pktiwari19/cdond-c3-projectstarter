@@ -303,7 +303,8 @@ jobs:
       - destroy_environment  
 
   smoke-test:
-    docker: circleci/node:13.8.0
+    docker:
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - run:
