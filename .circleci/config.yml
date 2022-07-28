@@ -235,6 +235,8 @@ jobs:
       - run:
           name: Install nodejs
           command: |
+            yum install -y tar;
+            yum install -y curl;
             curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash;
             . ~/.nvm/nvm.sh;
             nvm install --lts;
@@ -271,7 +273,7 @@ jobs:
                     
   deploy-backend:
     docker: 
-      - image: "python3.8-nodejs18-alpine"
+      - image: "python:3.7-alpine3.11"
     steps:
       - checkout
       - add_ssh_keys:
@@ -289,10 +291,16 @@ jobs:
           command:
              yum install tar;
              yum install gzip;
-#      - run:
-#          name: install nodejs
-#          command:
-#             apt install nodejs   
+      - run:
+          name: Install nodejs
+          command: |
+            yum install -y tar;
+            yum install -y curl;
+            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash;
+            . ~/.nvm/nvm.sh;
+            nvm install --lts;
+            node -e "console.log('Running Node.js ' + process.version)";
+            
       - run:
           name: install aws-cli
           command: |
