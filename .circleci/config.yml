@@ -310,7 +310,8 @@ jobs:
             # Zip the directory
             tar -czvf artifact.tar.gz backend;
             cd .circleci/ansible;
-            echo "host_key_checking=False" > ansible.cfg;
+            echo "[defaults]" > ansible.cfg
+            echo "host_key_checking=False" >> ansible.cfg;
             echo "Contents  of the inventory.txt file is -------";
             cat inventory.txt;
             ansible-playbook -i inventory.txt deploy-backend.yml
