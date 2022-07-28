@@ -155,7 +155,7 @@ jobs:
       - run:
           name: Add back-end ip to ansible inventory
           command: |
-            aws ec2 describe-instances --query "Reservations[*].Instances[*].PublicIpAddress" --output=text >> inventory
+            aws ec2 describe-instances --query "Reservations[*].Instances[*].PublicIpAddress" --output=text >> inventory.txt
       - persist_to_workspace:
           root: ~/
           paths:
@@ -245,7 +245,7 @@ jobs:
       - run:
           name: Get backend url
           command: |
-             export BACKEND_IP=$(aws ec2 describe-instances --query "Reservations[*].Instances[*].PublicIpAddress" --output=text)
+             export BACKEND_IP=$(`aws ec2 describe-instances --query "Reservations[*].Instances[*].PublicIpAddress" --output=text`)
              export API_URL="http://${BACKEND_IP}:3030"
              echo "${API_URL}"
       - run:
@@ -306,7 +306,7 @@ jobs:
       - run:
           name: Get backend url
           command: |
-             export BACKEND_IP=$(aws ec2 describe-instances --query "Reservations[*].Instances[*].PublicIpAddress" --output=text)
+             export BACKEND_IP=$(`aws ec2 describe-instances --query "Reservations[*].Instances[*].PublicIpAddress" --output=text`)
       
       - run:
           name: Backend smoke test.
