@@ -17,7 +17,7 @@
 - name: "install dependencies."
   become: yes
   apt:
-    name: ["nodejs", "npm","curl","gzip"]
+    name: ["nodejs", "npm","curl","zip"]
     state: latest
     update_cache: yes
 
@@ -31,7 +31,7 @@
 
 - name: "install aws cli"
   become: yes
-  command: curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip";
-           unzip awscliv2.zip;
-           sudo ./aws/install;
+  shell: curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip";
+         unzip awscliv2.zip;
+         sudo ./aws/install
 
