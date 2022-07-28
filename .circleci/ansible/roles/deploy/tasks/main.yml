@@ -2,7 +2,7 @@
 - name: "copy the package to ec2"
   become: yes
   copy:
-    src: ~/artifact.tar.gz
+    src: ~/project/artifact.tar.gz
     dest: ~/artifact.tar.gz
     owner: ubuntu
     mode: '0755'
