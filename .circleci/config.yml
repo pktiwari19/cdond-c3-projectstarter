@@ -192,6 +192,8 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout
+      - attach_workspace:
+          at: ~/
       - restore_cache:
           keys: [backend-build]
       
@@ -204,7 +206,6 @@ jobs:
              sudo unzip awscliv2.zip;
              sudo ./aws/install;
              aws --version
-
 
       - run:
           name: Run migrations
@@ -222,8 +223,8 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - project/.circleci/result.txt
-
+            - ~/result.txt
+            
       - destroy_environment      
 
   deploy-frontend:
