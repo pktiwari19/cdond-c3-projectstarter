@@ -221,7 +221,7 @@ jobs:
             fi
       - save_cache:
           paths: [backend]
-          key: [backend-build]
+          key: backend-build
             
       - destroy_environment      
 
