@@ -217,10 +217,10 @@ jobs:
             cd backend;
             if grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt
             then
-            echo "1" > result.txt
+            echo "1" > ~/project/backend/result.txt
             fi
       - save_cache:
-          paths: [backend]
+          paths: [backend/]
           key: [backend-build]
             
       - destroy_environment      
