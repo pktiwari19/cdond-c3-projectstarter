@@ -223,7 +223,7 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - ~/result.txt
+            - ~/project/backend/result.txt
             
       - destroy_environment      
 
