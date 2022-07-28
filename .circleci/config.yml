@@ -177,6 +177,17 @@ jobs:
           fingerprints: ["ae:5c:20:a5:fe:41:9b:a9:49:d3:cd:66:c3:d8:8c:57"]
       - attach_workspace:
           at: ~/
+
+      - run:
+          name: install aws-cli
+          command: |
+             sudo apt-get install -y curl;
+             sudo apt-get install -u zip;
+             sudo curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip";
+             sudo unzip awscliv2.zip;
+             sudo ./aws/install;
+             aws --version
+
       - run:
           name: Install dependencies
           command: |
