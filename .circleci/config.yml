@@ -227,29 +227,24 @@ jobs:
 
   deploy-frontend:
     docker: 
-      - image: amazon/aws-cli
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - restore_cache:
           keys: [frontend-build]
       - run:
-          name: Install nodejs
+          name: install aws-cli
           command: |
-            yum install -y tar;
-            yum install -y curl;
-            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash;
-            . ~/.nvm/nvm.sh;
-            nvm install --lts;
-            node -e "console.log('Running Node.js ' + process.version)";
-      - run:
-          name: Install python
-          command: |
-             yum update;
-             yum install -y python3
+             sudo curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip";
+             sudo unzip awscliv2.zip;
+             sudo ./aws/install;
+             aws --version
+             
       - run:
           name: Install ansible
           command: |
-             apk add --update ansible;
+             apt-get update;
+             apt install ansible
 
       - run:
           name: Get backend url
@@ -273,7 +268,7 @@ jobs:
                     
   deploy-backend:
     docker: 
-      - image: "python:3.7-alpine3.11"
+      - image: circleci/python
     steps:
       - checkout
       - add_ssh_keys:
@@ -285,30 +280,23 @@ jobs:
       - run:
           name: Install ansible
           command: |
-             apk add --update ansible
-      - run:
-          name: install tar, gzip and nodejs
-          command:
-             yum install tar;
-             yum install gzip;
-      - run:
-          name: Install nodejs
-          command: |
-            yum install -y tar;
-            yum install -y curl;
-            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash;
-            . ~/.nvm/nvm.sh;
-            nvm install --lts;
-            node -e "console.log('Running Node.js ' + process.version)";
+             sudo apt-get update;
+             sudo apt install ansible;
+             sudo apt install nodejs;
+#      - run:
+#          name: Install nodejs
+#          command: |
+#            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash;
+#            . ~/.nvm/nvm.sh;
+#            nvm install --lts;
+#            node -e "console.log('Running Node.js ' + process.version)";
             
       - run:
           name: install aws-cli
           command: |
-             apt --update curl;
-             apt --update zip;
-             curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip";
-             unzip awscliv2.zip;
-             ./aws/install;
+             sudo curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+             sudo unzip awscliv2.zip;
+             sudo ./aws/install;
              aws --version
 
       - run:
