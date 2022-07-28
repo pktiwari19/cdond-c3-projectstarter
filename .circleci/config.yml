@@ -129,6 +129,8 @@ jobs:
       - image: amazon/aws-cli
     steps:
       - checkout
+      - attach_workspace:
+          at: ~/
       - run:
           name: install tar and gzip
           command: |
@@ -155,6 +157,7 @@ jobs:
       - run:
           name: Add back-end ip to ansible inventory
           command: |
+            cd ~/project/.circleci/ansible;
             aws ec2 describe-instances --query "Reservations[*].Instances[*].PublicIpAddress" --output=text >> inventory.txt
       - persist_to_workspace:
           root: ~/
@@ -245,9 +248,9 @@ jobs:
       - run:
           name: Get backend url
           command: |
-             export BACKEND_IP=$(`aws ec2 describe-instances --query "Reservations[*].Instances[*].PublicIpAddress" --output=text`)
-             export API_URL="http://${BACKEND_IP}:3030"
-             echo "${API_URL}"
+             export BACKEND_IP=$(aws ec2 describe-instances --query "Reservations[*].Instances[*].PublicIpAddress" --output=text)
+             export API_URL="http://$BACKEND_IP:3030"
+             echo "$API_URL"
       - run:
           name: Deploy frontend objects
           command: |
@@ -306,14 +309,14 @@ jobs:
       - run:
           name: Get backend url
           command: |
-             export BACKEND_IP=$(`aws ec2 describe-instances --query "Reservations[*].Instances[*].PublicIpAddress" --output=text`)
+             export BACKEND_IP=$(aws ec2 describe-instances --query "Reservations[*].Instances[*].PublicIpAddress" --output=text)
       
       - run:
           name: Backend smoke test.
           command: |
-             export API_URL="http://${BACKEND_IP}:3030"
-             echo "${API_URL}"
-             if curl "${API_URL}/api/status" | grep "ok"
+             export API_URL="http://$BACKEND_IP:3030"
+             echo "$API_URL"
+             if curl "$API_URL/api/status" | grep "ok"
              then
              return 0
              else
