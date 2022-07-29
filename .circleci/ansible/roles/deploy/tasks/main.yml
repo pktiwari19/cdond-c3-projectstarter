@@ -8,7 +8,7 @@
 
 - name: "untar the file"
   become: yes
-  shell: cd ~/; tar -xvfz ~/artifact.tar.gz
+  shell: cd ~/; tar -zxvf ~/artifact.tar.gz
 
 - name: "start the app"
   become: yes
